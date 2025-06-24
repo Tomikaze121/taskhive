@@ -1,0 +1,7 @@
+{
+  "name": "taskhive",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
