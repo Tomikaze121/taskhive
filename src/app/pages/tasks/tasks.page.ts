@@ -1,25 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService, Task } from 'src/app/services/task.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.page.html',
   styleUrls: ['./tasks.page.scss'],
-  standalone:false,
+  standalone: false,
 })
 export class TasksPage implements OnInit {
   tasks: Task[] = [];
 
   constructor(
     private taskService: TaskService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private toastCtrl: ToastController
   ) {}
 
   ngOnInit() {
     this.taskService.getTasks().subscribe((data) => {
       this.tasks = data;
     });
+  }
+
+  async showToast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 2000,
+      position: 'bottom',
+    });
+    await toast.present();
   }
 
   async addTask() {
@@ -39,7 +49,9 @@ export class TasksPage implements OnInit {
               description: data.description,
               createdAt: Date.now(),
             };
-            this.taskService.addTask(newTask);
+            this.taskService.addTask(newTask).then(() => {
+              this.showToast('Task added!');
+            });
           },
         },
       ],
@@ -64,7 +76,9 @@ export class TasksPage implements OnInit {
               title: data.title,
               description: data.description,
             };
-            this.taskService.updateTask(task.id!, updatedTask);
+            this.taskService.updateTask(task.id!, updatedTask).then(() => {
+              this.showToast('Task updated!');
+            });
           },
         },
       ],
@@ -74,6 +88,8 @@ export class TasksPage implements OnInit {
   }
 
   deleteTask(id: string) {
-    this.taskService.deleteTask(id);
+    this.taskService.deleteTask(id).then(() => {
+      this.showToast('Task deleted!');
+    });
   }
 }

@@ -18,7 +18,7 @@ export class HomePage implements OnInit {
   ) {}
 
  ngOnInit() {
-  this.tasks$ = this.authService.getTasks(); // or from TaskService if you separate concerns later
+  this.tasks$ = this.authService.getTasks(); 
 }
     goToTasks() {
     this.router.navigate(['/tasks']);
