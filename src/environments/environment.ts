@@ -3,7 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebaseConfig: {
+    apiKey: "AIzaSyCyXEud4Zq__feEFX9fIrvsVaTtQX669m8",
+    authDomain: "taskhive-d3745.firebaseapp.com",
+    projectId: "taskhive-d3745",
+    storageBucket: "taskhive-d3745.appspot.com",
+    messagingSenderId: "120233694127",
+    appId: "1:120233694127:web:c65aa859aa0e347302155a"
+  }
 };
 
 /*
