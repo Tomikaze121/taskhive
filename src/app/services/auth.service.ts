@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore } from '@angular/fire/compat/firestore'; // ✅ FIXED
+import { AngularFirestore } from '@angular/fire/compat/firestore'; 
 import { Router } from '@angular/router';
 import { ToastController, LoadingController, AlertController } from '@ionic/angular';
 import { Observable } from 'rxjs';
@@ -12,19 +12,17 @@ export class AuthService {
 
   constructor(
     private afAuth: AngularFireAuth,
-    private firestore: AngularFirestore, // ✅ FIXED
+    private firestore: AngularFirestore, 
     private router: Router,
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController
   ) {}
 
-  // 🔐 Get current user observable
   getUser() {
     return this.afAuth.authState;
   }
 
-  // ✅ LOGIN
   async login(email: string, password: string) {
     const loading = await this.loadingCtrl.create({ message: 'Logging in...' });
     await loading.present();
@@ -40,7 +38,6 @@ export class AuthService {
     }
   }
 
-  // ✅ REGISTER
   async register(email: string, password: string) {
     const loading = await this.loadingCtrl.create({ message: 'Creating account...' });
     await loading.present();
@@ -56,7 +53,6 @@ export class AuthService {
     }
   }
 
-  // ✅ LOGOUT with confirmation
   async logout() {
     const alert = await this.alertCtrl.create({
       header: 'Confirm Logout',
@@ -82,13 +78,11 @@ export class AuthService {
     await alert.present();
   }
 
-  // 📥 GET TASKS from Firestore
  getTasks(): any {
   return this.firestore.collection('tasks').valueChanges({ idField: 'id' }) as any;
 }
 
 
-  // 📣 TOAST
   async showToast(message: string, duration: number = 2000) {
     const toast = await this.toastCtrl.create({
       message,
